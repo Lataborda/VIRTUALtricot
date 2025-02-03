@@ -30,8 +30,8 @@ fecha_encuesta = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 # Preguntas sobre el encuestado
 nombre = st.text_input("📝 Nombre del encuestado", key="nombre")
 ubicacion = st.text_input("📍 Ubicación (Departamento, Municipio, Vereda)", key="ubicacion")
-tipo_productor = st.radio("🌱 ¿Qué tipo de yuca produce?", ["Dulce", "Amarga"], key="tipo_productor")
-variedad_actual = st.text_input("🌾 ¿Qué variedad de yuca siembra actualmente?", key="variedad_actual")
+tipo_productor = st.radio("🍠 ¿Qué tipo de yuca produce?", ["Dulce", "Amarga"], key="tipo_productor")
+variedad_actual = st.text_input("🌱 ¿Qué variedad de yuca siembra actualmente?", key="variedad_actual")
 
 # Lista de videos en YouTube con títulos descriptivos
 video_links = {
@@ -62,8 +62,8 @@ for title, url in selected_videos:
 # Preguntas sobre preferencia de variedades usando los nombres limpios
 st.subheader("📊 Clasificación de Preferencia")
 
-fav_video = st.radio("✅ ¿Cuál video le gustó más?", list(video_labels.values()), key="fav", index=None)
-least_fav_video = st.radio("❌ ¿Cuál video le gustó menos?", list(video_labels.values()), key="least_fav", index=None)
+fav_video = st.radio("✅ ¿Cuál concepto de variedad le gustó más?", list(video_labels.values()), key="fav", index=None)
+least_fav_video = st.radio("👎🏼 ¿Cuál concepto de variedad le gustó menos?", list(video_labels.values()), key="least_fav", index=None)
 
 # Validación para evitar que elijan el mismo video como el favorito y el menos favorito
 if fav_video and least_fav_video and fav_video == least_fav_video:
