@@ -36,36 +36,22 @@ variedad_actual = st.text_input("🌾 ¿Qué variedad de yuca siembra actualment
 # Directorio donde están los videos
 VIDEO_DIR = "/Users/luisalejandrotabordaandrade/Desktop/virtual/videos"
 
-# Directorio donde están los videos (esto ya no es necesario)
-# VIDEO_DIR = "/Users/luisalejandrotabordaandrade/Desktop/virtual/videos"
-
-# Nueva URL base de GitHub donde están los videos
-GITHUB_REPO_URL = "https://raw.githubusercontent.com/Lataborda/VIRTUALtricot/main/videos/"
-
-# Lista de archivos de video en GitHub
-video_files = [
-    "DOBLE_PROPOSITO.mp4",
-    "LA_AMARILLA.mp4",
-    "LA_DURADERA.mp4",
-    "LA_PREMATURA.mp4",
-    "LA_RAPIDITA.mp4",
-    "LA_RENDIDORA.mp4",
-    "SUPER_INDUSTRIAL.mp4"
+video_links = [
+    "https://www.youtube.com/watch?v=eXtC8unIYSc",
+    "https://www.youtube.com/watch?v=fw9ixpas2wo",
+    "https://www.youtube.com/watch?v=fc0Sdb21OJY",
+    "https://www.youtube.com/watch?v=cMQwb8CRP2A",
+    "https://www.youtube.com/watch?v=Wybqmn-7wq4",
+    "https://www.youtube.com/watch?v=7SJzezYYWms",
+    "https://www.youtube.com/watch?v=79fuHech2dI"
 ]
 
 # Seleccionar 3 videos aleatorios
-if "selected_videos" not in st.session_state:
-    st.session_state.selected_videos = random.sample(video_files, 3)
+selected_videos = random.sample(video_links, 3)
 
-selected_videos = st.session_state.selected_videos  # Recuperar videos aleatorios en la sesión
-
-# Mostrar los 3 videos desde GitHub
 st.subheader("🎥 Por favor, vea los siguientes videos antes de responder:")
-video_labels = {}  # Diccionario para mapear archivos con nombres
-for i, video in enumerate(selected_videos, 1):
-    video_url = f"{GITHUB_REPO_URL}{video}"
-    st.video(video_url)
-    video_labels[video] = video.replace(".mp4", "")  # Nombre sin la extensión
+for video in selected_videos:
+    st.video(video)  # YouTube soporta streaming
 
 # Preguntas sobre preferencia de variedades
 st.subheader("📊 Clasificación de Preferencia")
