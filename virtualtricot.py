@@ -36,24 +36,35 @@ variedad_actual = st.text_input("🌾 ¿Qué variedad de yuca siembra actualment
 # Directorio donde están los videos
 VIDEO_DIR = "/Users/luisalejandrotabordaandrade/Desktop/virtual/videos"
 
-# Verificar si la carpeta de videos existe
-if not os.path.exists(VIDEO_DIR):
-    st.error(f"⚠️ La carpeta {VIDEO_DIR} no existe. Asegúrate de que los videos están en la carpeta correcta.")
-    st.stop()
+# Directorio donde están los videos (esto ya no es necesario)
+# VIDEO_DIR = "/Users/luisalejandrotabordaandrade/Desktop/virtual/videos"
 
-# Guardar los videos seleccionados en la sesión para evitar reinicios
+# Nueva URL base de GitHub donde están los videos
+GITHUB_REPO_URL = "https://raw.githubusercontent.com/Lataborda/VIRTUALtricot/main/videos/"
+
+# Lista de archivos de video en GitHub
+video_files = [
+    "DOBLE_PROPOSITO.mp4",
+    "LA_AMARILLA.mp4",
+    "LA_DURADERA.mp4",
+    "LA_PREMATURA.mp4",
+    "LA_RAPIDITA.mp4",
+    "LA_RENDIDORA.mp4",
+    "SUPER_INDUSTRIAL.mp4"
+]
+
+# Seleccionar 3 videos aleatorios
 if "selected_videos" not in st.session_state:
-    videos = [f for f in os.listdir(VIDEO_DIR) if f.endswith(".mp4")]
-    st.session_state.selected_videos = random.sample(videos, 3)
+    st.session_state.selected_videos = random.sample(video_files, 3)
 
-selected_videos = st.session_state.selected_videos  # Recuperar los videos guardados en sesión
+selected_videos = st.session_state.selected_videos  # Recuperar videos aleatorios en la sesión
 
-# Mostrar los 3 videos aleatorios
+# Mostrar los 3 videos desde GitHub
 st.subheader("🎥 Por favor, vea los siguientes videos antes de responder:")
 video_labels = {}  # Diccionario para mapear archivos con nombres
 for i, video in enumerate(selected_videos, 1):
-    video_path = os.path.join(VIDEO_DIR, video)
-    st.video(video_path)
+    video_url = f"{GITHUB_REPO_URL}{video}"
+    st.video(video_url)
     video_labels[video] = video.replace(".mp4", "")  # Nombre sin la extensión
 
 # Preguntas sobre preferencia de variedades
