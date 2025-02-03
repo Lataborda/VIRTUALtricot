@@ -1,13 +1,12 @@
 import streamlit as st
 import random
-import pandas as pd
 import os
 from datetime import datetime
 from supabase import create_client, Client
 
 # Configurar Supabase
 SUPABASE_URL = "https://dxgbqtpkjsptwrjdwkpv.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4Z2JxdHBranNwdHdyamR3a3B2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyNDcyNzcsImV4cCI6MjA1MzgyMzI3N30.3kpgYBPsBXRZZkNDDa7xIQE5l3ap_hFRZIC1UhGcBv0"  # Usa una clave actualizada
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4Z2JxdHBranNwdHdyamR3a3B2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyNDcyNzcsImV4cCI6MjA1MzgyMzI3N30.3kpgYBPsBXRZZkNDDa7xIQE5l3ap_hFRZIC1UhGcBv0"
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Configuración inicial de la app
@@ -41,9 +40,14 @@ if not os.path.exists(VIDEO_DIR):
     st.error(f"⚠️ La carpeta {VIDEO_DIR} no existe. Asegúrate de que los videos están en la carpeta correcta.")
     st.stop()
 
+# Obtener la lista de videos
+videos = [f for f in os.listdir(VIDEO_DIR) if f.endswith(".mp4")]
+if not videos:
+    st.error("⚠️ No se encontraron videos en la carpeta. Asegúrate de que los archivos tienen extensión .mp4.")
+    st.stop()
+
 # Guardar los videos seleccionados en la sesión para evitar reinicios
 if "selected_videos" not in st.session_state:
-    videos = [f for f in os.listdir(VIDEO_DIR) if f.endswith(".mp4")]
     st.session_state.selected_videos = random.sample(videos, 3)
 
 selected_videos = st.session_state.selected_videos  # Recuperar los videos guardados en sesión
@@ -53,6 +57,7 @@ st.subheader("🎥 Por favor, vea los siguientes videos antes de responder:")
 video_labels = {}  # Diccionario para mapear archivos con nombres
 for i, video in enumerate(selected_videos, 1):
     video_path = os.path.join(VIDEO_DIR, video)
+    st.write(f"Reproduciendo video: {video}")  # Depuración: mostrar el nombre del video
     st.video(video_path)
     video_labels[video] = video.replace(".mp4", "")  # Nombre sin la extensión
 
