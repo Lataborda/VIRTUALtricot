@@ -71,15 +71,18 @@ if fav_video and least_fav_video and fav_video == least_fav_video:
 
 # Función para guardar respuestas en Supabase
 def guardar_respuesta():
+    # Extraer solo las URLs de los videos seleccionados
+    video_urls = [video[1] for video in selected_videos]  # Extrae solo las URLs
+    
     data = {
         "fecha_encuesta": fecha_encuesta,
         "nombre": st.session_state.nombre,
         "ubicacion": st.session_state.ubicacion,
         "tipo_productor": st.session_state.tipo_productor,
         "variedad_actual": st.session_state.variedad_actual,
-        "video_1": video_labels[selected_videos[0]],
-        "video_2": video_labels[selected_videos[1]],
-        "video_3": video_labels[selected_videos[2]],
+        "video_1": video_labels[video_urls[0]],  # Usa la URL como clave
+        "video_2": video_labels[video_urls[1]],  
+        "video_3": video_labels[video_urls[2]],  
         "me_gusto_mas": fav_video,
         "me_gusto_menos": least_fav_video
     }
