@@ -33,44 +33,39 @@ ubicacion = st.text_input("📍 Ubicación (Departamento, Municipio, Vereda)", k
 tipo_productor = st.radio("🌱 ¿Qué tipo de yuca produce?", ["Dulce", "Amarga"], key="tipo_productor")
 variedad_actual = st.text_input("🌾 ¿Qué variedad de yuca siembra actualmente?", key="variedad_actual")
 
-# Lista de videos en YouTube
-video_links = [
-    "https://www.youtube.com/watch?v=eXtC8unIYSc",
-    "https://www.youtube.com/watch?v=fw9ixpas2wo",
-    "https://www.youtube.com/watch?v=fc0Sdb21OJY",
-    "https://www.youtube.com/watch?v=cMQwb8CRP2A",
-    "https://www.youtube.com/watch?v=Wybqmn-7wq4",
-    "https://www.youtube.com/watch?v=7SJzezYYWms",
-    "https://www.youtube.com/watch?v=79fuHech2dI"
-]
+# Lista de videos en YouTube con títulos descriptivos
+video_links = {
+    "INGLES DOBLE PROPÓSITO": "https://www.youtube.com/watch?v=eXtC8unIYSc",
+    "INGLES LA AMARILLA": "https://www.youtube.com/watch?v=fw9ixpas2wo",
+    "INGLES LA DURADERA": "https://www.youtube.com/watch?v=fc0Sdb21OJY",
+    "INGLES LA PREMATURA": "https://www.youtube.com/watch?v=cMQwb8CRP2A",
+    "INGLES LA RAPIDITA": "https://www.youtube.com/watch?v=Wybqmn-7wq4",
+    "INGLES LA RENDIDORA": "https://www.youtube.com/watch?v=7SJzezYYWms",
+    "INGLES SUPER INDUSTRIAL": "https://www.youtube.com/watch?v=79fuHech2dI"
+}
 
 # Seleccionar 3 videos aleatorios
 if "selected_videos" not in st.session_state:
-    st.session_state.selected_videos = random.sample(video_links, 3)
+    st.session_state.selected_videos = random.sample(list(video_links.items()), 3)  # Seleccionar 3 al azar
 
 selected_videos = st.session_state.selected_videos  # Recuperar videos aleatorios en la sesión
 
-# Mostrar los 3 videos desde YouTube
+# Mostrar los 3 videos desde YouTube con nombres formateados
 st.subheader("🎥 Por favor, vea los siguientes videos antes de responder:")
-video_labels = {}  # Diccionario para mapear archivos con nombres
-for video in selected_videos:
-    st.video(video)  # YouTube permite streaming
-    video_labels[video] = video  # Guardar el video en el diccionario
+video_labels = {}  # Diccionario para mapear enlaces con nombres limpios
 
-# Preguntas sobre preferencia de variedades
+for title, url in selected_videos:
+    clean_title = title.replace("INGLES ", "")  # Quitar la palabra 'INGLES'
+    st.video(url)
+    video_labels[url] = clean_title  # Guardar el título limpio asociado al URL
+
+# Preguntas sobre preferencia de variedades usando los nombres limpios
 st.subheader("📊 Clasificación de Preferencia")
-
-# Guardar la selección en sesión para evitar reinicios
-if "fav_video" not in st.session_state:
-    st.session_state.fav_video = None
-
-if "least_fav_video" not in st.session_state:
-    st.session_state.least_fav_video = None
 
 fav_video = st.radio("✅ ¿Cuál video le gustó más?", list(video_labels.values()), key="fav", index=None)
 least_fav_video = st.radio("❌ ¿Cuál video le gustó menos?", list(video_labels.values()), key="least_fav", index=None)
 
-# Validación para evitar que se elijan el mismo video como el favorito y el menos favorito
+# Validación para evitar que elijan el mismo video como el favorito y el menos favorito
 if fav_video and least_fav_video and fav_video == least_fav_video:
     st.warning("⚠️ La opción que más le gustó y la que menos le gustó no pueden ser la misma. Seleccione opciones diferentes.")
 
