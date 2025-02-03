@@ -33,8 +33,8 @@ ubicacion = st.text_input("📍 Ubicación (Departamento, Municipio, Vereda)", k
 tipo_productor = st.radio("🌱 ¿Qué tipo de yuca produce?", ["Dulce", "Amarga"], key="tipo_productor")
 variedad_actual = st.text_input("🌾 ¿Qué variedad de yuca siembra actualmente?", key="variedad_actual")
 
-# Directorio donde están los videos
-VIDEO_DIR = "/Users/luisalejandrotabordaandrade/Desktop/virtual/videos"
+# Directorio donde están los videos (ruta relativa)
+VIDEO_DIR = "videos"
 
 # Verificar si la carpeta de videos existe
 if not os.path.exists(VIDEO_DIR):
