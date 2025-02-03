@@ -36,22 +36,25 @@ variedad_actual = st.text_input("🌾 ¿Qué variedad de yuca siembra actualment
 # Directorio donde están los videos
 VIDEO_DIR = "/Users/luisalejandrotabordaandrade/Desktop/virtual/videos"
 
-video_links = [
-    "https://www.youtube.com/watch?v=eXtC8unIYSc",
-    "https://www.youtube.com/watch?v=fw9ixpas2wo",
-    "https://www.youtube.com/watch?v=fc0Sdb21OJY",
-    "https://www.youtube.com/watch?v=cMQwb8CRP2A",
-    "https://www.youtube.com/watch?v=Wybqmn-7wq4",
-    "https://www.youtube.com/watch?v=7SJzezYYWms",
-    "https://www.youtube.com/watch?v=79fuHech2dI"
-]
+# Verificar si la carpeta de videos existe
+if not os.path.exists(VIDEO_DIR):
+    st.error(f"⚠️ La carpeta {VIDEO_DIR} no existe. Asegúrate de que los videos están en la carpeta correcta.")
+    st.stop()
 
-# Seleccionar 3 videos aleatorios
-selected_videos = random.sample(video_links, 3)
+# Guardar los videos seleccionados en la sesión para evitar reinicios
+if "selected_videos" not in st.session_state:
+    videos = [f for f in os.listdir(VIDEO_DIR) if f.endswith(".mp4")]
+    st.session_state.selected_videos = random.sample(videos, 3)
 
+selected_videos = st.session_state.selected_videos  # Recuperar los videos guardados en sesión
+
+# Mostrar los 3 videos aleatorios
 st.subheader("🎥 Por favor, vea los siguientes videos antes de responder:")
-for video in selected_videos:
-    st.video(video)  # YouTube soporta streaming
+video_labels = {}  # Diccionario para mapear archivos con nombres
+for i, video in enumerate(selected_videos, 1):
+    video_path = os.path.join(VIDEO_DIR, video)
+    st.video(video_path)
+    video_labels[video] = video.replace(".mp4", "")  # Nombre sin la extensión
 
 # Preguntas sobre preferencia de variedades
 st.subheader("📊 Clasificación de Preferencia")
