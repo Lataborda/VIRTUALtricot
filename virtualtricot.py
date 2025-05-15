@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 from supabase import create_client, Client
 
-st.set_page_config(page_title="VCA4D_Enviromental_DRC", layout="wide")
+
 # Configurar Supabase
 SUPABASE_URL = "https://dxgbqtpkjsptwrjdwkpv.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4Z2JxdHBranNwdHdyamR3a3B2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyNDcyNzcsImV4cCI6MjA1MzgyMzI3N30.3kpgYBPsBXRZZkNDDa7xIQE5l3ap_hFRZIC1UhGcBv0"  # Usa una clave actualizada
